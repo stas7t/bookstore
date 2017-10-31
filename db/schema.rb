@@ -15,23 +15,6 @@ ActiveRecord::Schema.define(version: 20171013091658) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "addresses", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "address"
-    t.string "city"
-    t.string "country"
-    t.string "zip"
-    t.string "phone"
-    t.string "type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.bigint "order_id"
-    t.index ["order_id"], name: "index_addresses_on_order_id"
-    t.index ["user_id"], name: "index_addresses_on_user_id"
-  end
-
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -87,65 +70,12 @@ ActiveRecord::Schema.define(version: 20171013091658) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "coupons", force: :cascade do |t|
-    t.string "code"
-    t.decimal "discount"
-    t.boolean "active"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "credit_cards", force: :cascade do |t|
-    t.string "number"
-    t.string "name_on_card"
-    t.string "month_year"
-    t.string "cvv"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.index ["user_id"], name: "index_credit_cards_on_user_id"
-  end
-
-  create_table "deliveries", force: :cascade do |t|
-    t.string "name"
-    t.string "time"
-    t.decimal "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "images", force: :cascade do |t|
     t.string "file"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "book_id"
     t.index ["book_id"], name: "index_images_on_book_id"
-  end
-
-  create_table "order_items", force: :cascade do |t|
-    t.integer "quantity"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "book_id"
-    t.bigint "order_id"
-    t.index ["book_id"], name: "index_order_items_on_book_id"
-    t.index ["order_id"], name: "index_order_items_on_order_id"
-  end
-
-  create_table "orders", force: :cascade do |t|
-    t.string "number"
-    t.integer "status"
-    t.bigint "user_id"
-    t.datetime "completed_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "delivery_id"
-    t.bigint "credit_card_id"
-    t.bigint "coupon_id"
-    t.index ["coupon_id"], name: "index_orders_on_coupon_id"
-    t.index ["credit_card_id"], name: "index_orders_on_credit_card_id"
-    t.index ["delivery_id"], name: "index_orders_on_delivery_id"
-    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -187,17 +117,8 @@ ActiveRecord::Schema.define(version: 20171013091658) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "addresses", "orders"
-  add_foreign_key "addresses", "users"
   add_foreign_key "books", "categories"
-  add_foreign_key "credit_cards", "users"
   add_foreign_key "images", "books"
-  add_foreign_key "order_items", "books"
-  add_foreign_key "order_items", "orders"
-  add_foreign_key "orders", "coupons"
-  add_foreign_key "orders", "credit_cards"
-  add_foreign_key "orders", "deliveries"
-  add_foreign_key "orders", "users"
   add_foreign_key "reviews", "books"
   add_foreign_key "reviews", "users"
 end
