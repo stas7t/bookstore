@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171013091658) do
+ActiveRecord::Schema.define(version: 20171031215925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,70 @@ ActiveRecord::Schema.define(version: 20171013091658) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
+  create_table "shopping_cart_addresses", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "address"
+    t.string "city"
+    t.string "country"
+    t.string "zip"
+    t.string "phone"
+    t.string "address_type"
+    t.integer "user_id"
+    t.bigint "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_shopping_cart_addresses_on_order_id"
+  end
+
+  create_table "shopping_cart_coupons", force: :cascade do |t|
+    t.string "code"
+    t.decimal "discount"
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "shopping_cart_credit_cards", force: :cascade do |t|
+    t.string "number"
+    t.string "name_on_card"
+    t.string "month_year"
+    t.string "cvv"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "shopping_cart_deliveries", force: :cascade do |t|
+    t.string "name"
+    t.string "time"
+    t.decimal "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "shopping_cart_order_items", force: :cascade do |t|
+    t.integer "quantity"
+    t.integer "product_id"
+    t.bigint "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_shopping_cart_order_items_on_order_id"
+  end
+
+  create_table "shopping_cart_orders", force: :cascade do |t|
+    t.string "number"
+    t.integer "status"
+    t.integer "user_id"
+    t.bigint "coupon_id"
+    t.bigint "delivery_id"
+    t.bigint "credit_card_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coupon_id"], name: "index_shopping_cart_orders_on_coupon_id"
+    t.index ["credit_card_id"], name: "index_shopping_cart_orders_on_credit_card_id"
+    t.index ["delivery_id"], name: "index_shopping_cart_orders_on_delivery_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -121,4 +185,9 @@ ActiveRecord::Schema.define(version: 20171013091658) do
   add_foreign_key "images", "books"
   add_foreign_key "reviews", "books"
   add_foreign_key "reviews", "users"
+  add_foreign_key "shopping_cart_addresses", "shopping_cart_orders", column: "order_id"
+  add_foreign_key "shopping_cart_order_items", "shopping_cart_orders", column: "order_id"
+  add_foreign_key "shopping_cart_orders", "shopping_cart_coupons", column: "coupon_id"
+  add_foreign_key "shopping_cart_orders", "shopping_cart_credit_cards", column: "credit_card_id"
+  add_foreign_key "shopping_cart_orders", "shopping_cart_deliveries", column: "delivery_id"
 end
