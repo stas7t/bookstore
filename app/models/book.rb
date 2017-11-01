@@ -2,8 +2,8 @@ class Book < ApplicationRecord
   belongs_to :category
   has_many :authorships, dependent: :destroy
   has_many :authors, through: :authorships, dependent: :destroy
-  has_many :order_items, dependent: :destroy
-  has_many :orders, through: :order_items, dependent: :destroy
+  has_many :order_items, class_name: 'ShoppingCart::OrderItem', foreign_key: :product_id, dependent: :destroy
+  has_many :orders, class_name: 'ShoppingCart::Order', through: :order_items, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :images, dependent: :destroy
 

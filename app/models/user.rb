@@ -18,15 +18,14 @@ class User < ApplicationRecord
                       1 lowercase, at least 1 number and no whitespeses.' },
             unless: :skip_password_validation
 
-  has_many :orders, dependent: :destroy
-  has_many :order_items, through: :orders, dependent: :destroy
+  has_many :orders, class_name: 'ShoppingCart::Order', dependent: :destroy
+  has_many :order_items, class_name: 'ShoppingCart::OrderItem', through: :orders, dependent: :destroy
   has_many :books, through: :order_items, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :addresses, dependent: :destroy
 
-  has_one :billing, dependent: :destroy
-  has_one :shipping, dependent: :destroy
-  has_one :credit_card, dependent: :destroy
+  has_one :billing, class_name: 'ShoppingCart::Billing', dependent: :destroy
+  has_one :shipping, class_name: 'ShoppingCart::Shipping', dependent: :destroy
 
   mount_uploader :avatar, AvatarUploader
 
