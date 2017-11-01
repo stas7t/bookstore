@@ -39,7 +39,7 @@ RailsAdmin.config do |config|
     # history_show
   end
 
-  [Address, Admin, Authorship, Billing, CreditCard, OrderItem, Shipping, User].each do |model|
+  [ShoppingCart::Address, Admin, Authorship, ShoppingCart::Billing, ShoppingCart::CreditCard, ShoppingCart::OrderItem, ShoppingCart::Shipping, User].each do |model|
     config.excluded_models << model
   end
 
@@ -103,7 +103,7 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model Order do
+  config.model ShoppingCart::Order do
     list do
       scopes %i[in_progress delivered canceled]
       field :number
