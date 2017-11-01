@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
+  mount ShoppingCart::Engine, at: "/cart"
   mount RailsAdmin::Engine => '/cms', as: 'rails_admin'
   root to: 'home#index'
   get  'catalog',            to: 'books#index'
-  get  'settings/addresses', to: 'addresses#index'
-  post 'settings/addresses', to: 'addresses#create'
-  put  'settings/addresses', to: 'addresses#update'
+  # get  'settings/addresses', to: 'addresses#index'
+  # post 'settings/addresses', to: 'addresses#create'
+  # put  'settings/addresses', to: 'addresses#update'
   get  'settings/privacy',   to: 'users#edit'
 
   resource :user, only: %i[edit] do
@@ -17,11 +18,11 @@ Rails.application.routes.draw do
   resources :books, only: %i[index show update] do
     resources :reviews, only: :create
   end
-  resource  :cart, only: %i[show update]
-  resources :checkout
-  resources :credit_card
-  resources :orders, only: %i[index show]
-  resources :order_items, only: %i[create update destroy]
+  # resource  :cart, only: %i[show update]
+  # resources :checkout
+  # resources :credit_card
+  # resources :orders, only: %i[index show]
+  # resources :order_items, only: %i[create update destroy]
 
   devise_for :admins
   devise_for :users,
