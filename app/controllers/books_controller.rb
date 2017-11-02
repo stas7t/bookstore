@@ -37,7 +37,7 @@ class BooksController < ApplicationController
   end
 
   def set_order_item
-    @order_item = OrderItem.new
+    @order_item = ShoppingCart::OrderItem.new
   end
 
   def set_categories

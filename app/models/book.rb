@@ -22,8 +22,9 @@ class Book < ApplicationRecord
   end
 
   def self.best_sellers(category_id = nil)
-    best = Order.payed.joins(:order_items).group(:book_id)
-                .order('sum("order_items"."quantity") DESC').count.keys
+    best = ShoppingCart::Order.payed.joins(:order_items).group(:product_id)
+                              .order('sum("shopping_cart_order_items"."quantity") DESC')
+                              .count.keys
     Book.find(best)
   end
 end
