@@ -1,10 +1,10 @@
 %main.container.general-main-wrap
   %h1.general-title-margin Cart
-  - items = OrderItem.where(id: session[:order_item_ids])
+  - items = ShoppingCart::OrderItem.where(id: session[:order_item_ids])
   - if items.empty?
     .text-center
       %p.font-18 Cart is empty
-      = link_to "Go to Store", catalog_path(), class: "btn btn-default mb-20"
+      = link_to "Go to Store", main_app.catalog_path(), class: "btn btn-default mb-20"
   -else
     .visible-xs
       = render 'order_items_xs'
@@ -23,7 +23,7 @@
           .res-mr-200.text-center.general-text-right
             %p.in-gold-500.font-18 Order Summary
             %table.general-summary-table.general-summary-table-right.general-text-right
-              = render 'checkout/order_summary', order: @order
-            = link_to "Checkout", checkout_path(:login), class: "btn btn-default mb-20 visible-xs-inline-block"
+              = render 'shopping_cart/checkout/order_summary', order: @order
+            = link_to "Checkout", shopping_cart.checkout_path(:login), class: "btn btn-default mb-20 visible-xs-inline-block"
     .text-center
-      = link_to "Checkout", checkout_path(:login), class: "btn btn-default mb-20 hidden-xs"
+      = link_to "Checkout", shopping_cart.checkout_path(:login), class: "btn btn-default mb-20 hidden-xs"

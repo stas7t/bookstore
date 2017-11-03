@@ -3,21 +3,21 @@
     = button_to order_item, method: :delete, class: 'close general-cart-close' do
       %span{'aria-hidden': "true"} &times;
     .general-img-wrap-table
-      = link_to book_path(order_item.book) do
-        = image_tag(order_item.book.cover, class: "cart-img-shadow", alt: "design-book")
-    = link_to book_path(order_item.book), class: 'title-link' do
-      %p.title= order_item.book.title
+      = link_to main_app.book_path(order_item.product) do
+        = image_tag(order_item.product.cover, class: "cart-img-shadow", alt: "design-book")
+    = link_to main_app.book_path(order_item.product), class: 'title-link' do
+      %p.title= order_item.product.title
     %table.table
       %tr
         %td
           %span.in-grey-600 Price
         %td
-          %span.font-16.in-gold-500= number_to_euro order_item.book.price
+          %span.font-16.in-gold-500= number_to_euro order_item.product.price
       %tr
         %td.vertical-middle
           %span.in-grey-600 Quantity
         %td
-          = render 'carts/quantity', order_item: order_item
+          = render 'shopping_cart/carts/quantity', order_item: order_item
       %tr
         %td
           %span.in-grey-600 SubTotal

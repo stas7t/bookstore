@@ -11,8 +11,8 @@
                   %i.fa.fa-eye.thumb-icon.pt-10{'aria-hidden': "true"}
                 %a.thumb-hover-link{href: "", onclick: "$(this).siblings('form').submit()"}
                   %i.fa.fa-shopping-cart.thumb-icon.pt-10
-                = form_for @order_item, method: :post do |form|
-                  = form.hidden_field :book_id, value: book.id
+                = form_for @order_item, url: shopping_cart.order_items_path, method: :post do |form|
+                  = form.hidden_field :product_id, value: book.id
                   = form.hidden_field :quantity, value: 1
         .general-thumb-info
           %p.title= book.title

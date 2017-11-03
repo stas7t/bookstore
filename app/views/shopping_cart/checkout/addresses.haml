@@ -15,12 +15,12 @@
           %h3.general-subtitle Billing Address
           %p.general-info-text all fields are required
         = form.fields_for @addresses.billing do |ff|
-          = render 'addresses/form_fields', f: ff
+          = render 'shopping_cart/addresses/form_fields', f: ff, type: 'billing'
       .col-md-5.col-md-offset-1.mb-60
         .visible-xs.visible-sm
           %h3.general-subtitle Shipping Address
         = form.fields_for @addresses.shipping do |ff|
-          = render 'addresses/form_fields', f: ff
+          = render 'shopping_cart/addresses/form_fields', f: ff, type: 'shipping'
         .form-group.checkbox
           %label.checkbox-label
             = form.check_box :use_billing, class: 'checkbox-input', id: 'use_billing', hidden: true

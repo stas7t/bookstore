@@ -26,14 +26,14 @@
     - @order.order_items.each do |order_item|
       .general-cart-item.divider-lg
         .general-img-wrap-table
-          = image_tag(order_item.book.cover, class: "cart-img-shadow", alt: "design-book")
-        %p.title= order_item.book.title
+          = image_tag(order_item.product.cover, class: "cart-img-shadow", alt: "design-book")
+        %p.title= order_item.product.title
         %table.table
           %tr
             %td
               %span.in-grey-600 Price
             %td
-              %span.font-16.in-gold-500= number_to_euro order_item.book.price
+              %span.font-16.in-gold-500= number_to_euro order_item.product.price
           %tr
             %td.vertical-middle
               %span.in-grey-600 Quantity
@@ -62,12 +62,12 @@
           %tr
             %td
               .general-img-wrap-table
-                = image_tag(order_item.book.cover, class: "cart-img-shadow pull-left", alt: "design-book")
+                = image_tag(order_item.product.cover, class: "cart-img-shadow pull-left", alt: "design-book")
             %td
-              %p.title= order_item.book.title
-              %p.in-grey-600.fw-300= order_item.book.description.split('.').first
+              %p.title= order_item.product.title
+              %p.in-grey-600.fw-300= order_item.product.description.split('.').first
             %td
-              %span.font-16.in-gold-500= number_to_euro order_item.book.price
+              %span.font-16.in-gold-500= number_to_euro order_item.product.price
             %td
               %span.ml-30= order_item.quantity
             %td
@@ -77,4 +77,4 @@
     %table.general-summary-table.general-summary-table-right.general-text-right
       = render 'order_summary', order: @order
   .text-center
-    = link_to "Back to Store", root_path, class: 'btn btn-default mb-20'
+    = link_to "Back to Store", main_app.root_path, class: 'btn btn-default mb-20'
