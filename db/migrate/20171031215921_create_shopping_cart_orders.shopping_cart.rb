@@ -10,6 +10,7 @@ class CreateShoppingCartOrders < ActiveRecord::Migration[5.1]
       t.references :delivery, foreign_key: { to_table: :shopping_cart_deliveries }
       t.references :credit_card, foreign_key: { to_table: :shopping_cart_credit_cards }
 
+      t.timestamp :completed_at
       t.timestamps
     end
   end

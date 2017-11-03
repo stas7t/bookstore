@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  mount ShoppingCart::Engine, at: "/cart"
+  mount ShoppingCart::Engine, at: "/"
   mount RailsAdmin::Engine => '/cms', as: 'rails_admin'
   root to: 'home#index'
   get  'catalog',            to: 'books#index'

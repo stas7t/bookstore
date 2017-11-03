@@ -6,7 +6,7 @@ RSpec.feature 'Cart', type: :feature do
     visit root_path
     find('a.shop-link.pull-right.hidden-xs').click
 
-    expect(page.current_path).to eq cart_path
+    expect(page.current_path).to eq shopping_cart.cart_path
     expect(page).to have_content 'Cart is empty'
   end
 
@@ -16,7 +16,7 @@ RSpec.feature 'Cart', type: :feature do
     click_button('Buy Now')
     find('a.shop-link.pull-right.hidden-xs').click
 
-    expect(page.current_path).to eq cart_path
+    expect(page.current_path).to eq shopping_cart.cart_path
     expect(page).not_to have_content 'Cart is empty'
   end
 
@@ -26,7 +26,7 @@ RSpec.feature 'Cart', type: :feature do
     click_button('Buy Now')
     find('a.shop-link.pull-right.hidden-xs').click
 
-    expect(page.current_path).to eq cart_path
+    expect(page.current_path).to eq shopping_cart.cart_path
     expect(page).not_to have_content 'Cart is empty'
 
     within('.table.table-hover') do
@@ -34,7 +34,7 @@ RSpec.feature 'Cart', type: :feature do
     end
     expect(page.current_path).to eq book_path(@book)
 
-    visit cart_path
+    visit shopping_cart.cart_path
     within('.table.table-hover') do
       find('.title-link').click
     end

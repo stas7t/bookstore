@@ -22,7 +22,7 @@ class User < ApplicationRecord
   has_many :order_items, class_name: 'ShoppingCart::OrderItem', through: :orders, dependent: :destroy
   has_many :books, through: :order_items, dependent: :destroy
   has_many :reviews, dependent: :destroy
-  has_many :addresses, dependent: :destroy
+  has_many :addresses, class_name: 'ShoppingCart::Address', dependent: :destroy
 
   has_one :billing, class_name: 'ShoppingCart::Billing', dependent: :destroy
   has_one :shipping, class_name: 'ShoppingCart::Shipping', dependent: :destroy

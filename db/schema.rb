@@ -148,6 +148,7 @@ ActiveRecord::Schema.define(version: 20171031215925) do
     t.bigint "coupon_id"
     t.bigint "delivery_id"
     t.bigint "credit_card_id"
+    t.datetime "completed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["coupon_id"], name: "index_shopping_cart_orders_on_coupon_id"

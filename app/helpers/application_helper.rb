@@ -4,7 +4,7 @@ module ApplicationHelper
   end
 
   def cart_items_count
-    return OrderItem.where(id: session[:order_item_ids]).sum(:quantity) if session[:order_item_ids]
+    return ShoppingCart::OrderItem.where(id: session[:order_item_ids]).sum(:quantity) if session[:order_item_ids]
     current_order.order_items.sum(:quantity)
   end
 

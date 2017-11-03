@@ -5,7 +5,7 @@ RSpec.feature 'Checkout', type: :feature do
 
   before do
     FactoryGirl.create(:book)
-    FactoryGirl.create_list(:delivery, 3)
+    FactoryGirl.create_list(:shopping_cart_delivery, 3)
   end
 
   scenario 'Checkout process' do
@@ -13,9 +13,9 @@ RSpec.feature 'Checkout', type: :feature do
     visit root_path
     find('input[value="Buy Now"]').click
     find('a.shop-link.hidden-xs').click
-    expect(page.current_path).to eq cart_path
+    expect(page.current_path).to eq shopping_cart.cart_path
     find('a[href="/checkout/login"].hidden-xs').click
-    expect(page.current_path).to eq checkout_path(:addresses)
+    expect(page.current_path).to eq shopping_cart.checkout_path(:addresses)
 
     within('form#new_addresses_form') do
       %w[billing shipping].each do |type|
@@ -31,10 +31,10 @@ RSpec.feature 'Checkout', type: :feature do
       click_button('Save and Continue')
     end
 
-    expect(page.current_path).to eq checkout_path(:delivery)
+    expect(page.current_path).to eq shopping_cart.checkout_path(:delivery)
     all('.radio-label').first.click
     click_button('Save and Continue')
-    expect(page.current_path).to eq checkout_path(:payment)
+    expect(page.current_path).to eq shopping_cart.checkout_path(:payment)
 
     within('form#new_credit_card') do
       fill_in 'credit_card[number]', with: '1111222233334444'
@@ -45,10 +45,10 @@ RSpec.feature 'Checkout', type: :feature do
       click_button('Save and Continue')
     end
 
-    expect(page.current_path).to eq checkout_path(:confirm)
+    expect(page.current_path).to eq shopping_cart.checkout_path(:confirm)
 
     click_button('Place Order')
-    expect(page.current_path).to eq checkout_path(:complete)
+    expect(page.current_path).to eq shopping_cart.checkout_path(:complete)
     expect(page).to have_content "An order confirmation has been sent to #{user.email}"
   end
 end

@@ -8,7 +8,7 @@
 
 avatar_colors = %w[grey blue green orange pink]
 
-4.times do
+1.times do
   User.create!(email: FFaker::Internet.safe_email,
                password: "test#{rand(100...999)}XX",
                name: FFaker::Name.name)
@@ -23,7 +23,7 @@ end
 
 categories = Category.all
 
-32.times do
+3.times do
   Author.create(first_name: FFaker::Name.first_name,
                 last_name: FFaker::Name.last_name,
                 description: FFaker::Lorem.paragraph)
@@ -42,7 +42,7 @@ end
 
 used_book_titles = []
 
-256.times do |index|
+8.times do |index|
   title = FFaker::Book.title
   used_book_titles.include?(title) ? title << " #{index}" : used_book_titles << title
 
@@ -76,10 +76,10 @@ books.each do |book|
   end
 end
 
-Delivery.create(name: 'Delivery Next Day!', time: '3 to  7 days', price:  5.00)
-Delivery.create(name: 'Pick Up In-Store',   time: '5 to 20 days', price: 10.00)
-Delivery.create(name: 'Expressit',          time: '2 to  3 days', price: 15.00)
+ShoppingCart::Delivery.create(name: 'Delivery Next Day!', time: '3 to  7 days', price:  5.00)
+ShoppingCart::Delivery.create(name: 'Pick Up In-Store',   time: '5 to 20 days', price: 10.00)
+ShoppingCart::Delivery.create(name: 'Expressit',          time: '2 to  3 days', price: 15.00)
 
-Coupon.create(code: 'TEST',       discount: 0.01)
-Coupon.create(code: 'WINTERSALE', discount: 5.00)
-Coupon.create(code: 'RUBYGARAGE', discount: 7.50)
+ShoppingCart::Coupon.create(code: 'TEST',       discount: 0.01)
+ShoppingCart::Coupon.create(code: 'WINTERSALE', discount: 5.00)
+ShoppingCart::Coupon.create(code: 'RUBYGARAGE', discount: 7.50)
