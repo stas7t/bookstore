@@ -6,7 +6,7 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      %a.navbar-brand{href: root_path} Bookstore
+      %a.navbar-brand{href: main_app.root_path} Bookstore
       %a.shop-link.pull-right.visible-xs{href: shopping_cart.cart_path}
         = render 'shop_icon'
     %a.shop-link.pull-right.hidden-xs{href: shopping_cart.cart_path}
@@ -17,13 +17,13 @@
           %span{'aria-hidden': "true"} &times;
         %ul.nav.navbar-nav
           %li
-            = link_to "Home", root_path
+            = link_to "Home", main_app.root_path
           %li
             %a{type: "button", 'data-toggle': "collapse", href: "#menu_shop", 'aria-expanded': "false", 'aria-controls': "menu_shop"} Shop
             %ul#menu_shop.collapse.list-unstyled.pl-30.mb-10{'aria-expanded': "false"}
               - categories.each do |category|
                 %li
-                  = link_to "#{category.name}", catalog_path(category_id: category.id), class: "collapse-link"
+                  = link_to "#{category.name}", main_app.catalog_path(category_id: category.id), class: "collapse-link"
           - if user_signed_in?
             %li
               %a{type: "button", 'data-toggle': "collapse", href: "#menu_my_account", 'aria-expanded': "false", 'aria-controls': "menu_my_account"} My account
@@ -33,22 +33,22 @@
                 %li
                   = link_to "Settings", shopping_cart.settings_addresses_path, class: "collapse-link"
             %li
-              = link_to "Log out", destroy_user_session_path, method: :delete
+              = link_to "Log out", main_app.destroy_user_session_path, method: :delete
           - else
             %li
-              = link_to "Log in", new_user_session_path 
+              = link_to "Log in", main_app.new_user_session_path 
             %li
-              = link_to "Sign up", new_user_registration_path
+              = link_to "Sign up", main_app.new_user_registration_path
       .hidden-xs
         %ul.nav.navbar-nav
           %li
-            = link_to "Home", root_path
+            = link_to "Home", main_app.root_path
           %li.dropdown
             %a.dropdown-toggle{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"} Shop
             %ul.dropdown-menu
               - categories.each do |category|
                 %li
-                  = link_to "#{category.name}", catalog_path(category_id: category.id)
+                  = link_to "#{category.name}", main_app.catalog_path(category_id: category.id)
           - if user_signed_in?
             %li.dropdown
               %a.dropdown-toggle{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"} My account
@@ -59,9 +59,9 @@
                   = link_to "Settings", shopping_cart.settings_addresses_path
                 %li.divider{role: "separator"}
                 %li
-                  = link_to "Log out", destroy_user_session_path, method: :delete
+                  = link_to "Log out", main_app.destroy_user_session_path, method: :delete
           - else
             %li
-              = link_to "Log in", new_user_session_path
+              = link_to "Log in", main_app.new_user_session_path
             %li
-              = link_to "Sign up", new_user_registration_path
+              = link_to "Sign up", main_app.new_user_registration_path
