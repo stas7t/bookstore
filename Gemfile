@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'dotenv-rails', :require => 'dotenv/rails-now'
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 
-gem 'shopping_cart', path: '../../shopping_cart'
+# gem 'shopping_cart', path: '../../shopping_cart'
+gem 'shopping_cart', git: 'https://github.com/stas7t/shopping_cart', branch: 'dev'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')

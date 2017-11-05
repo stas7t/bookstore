@@ -1,5 +1,7 @@
-PATH
-  remote: ../../shopping_cart
+GIT
+  remote: https://github.com/stas7t/shopping_cart
+  revision: 9fc64f101d86450d6ea722499a614c2931424b01
+  branch: dev
   specs:
     shopping_cart (0.1.0)
       cancancan (~> 2.0)
