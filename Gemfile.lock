@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/stas7t/shopping_cart
-  revision: 9fc64f101d86450d6ea722499a614c2931424b01
+  revision: b55e1c08e3588acd24791b762f938eff641781b0
   branch: dev
   specs:
     shopping_cart (0.1.0)
@@ -9,6 +9,7 @@ GIT
       devise (~> 4.3)
       haml-rails (~> 1.0.0)
       rails (~> 5.1.2)
+      rails-i18n (~> 5.0.0)
       simple_form (~> 3.5)
       wicked (~> 1.3, >= 1.3.2)
 
