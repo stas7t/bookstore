@@ -1,5 +1,8 @@
 # README
 
+[![CircleCI](https://circleci.com/gh/stas7t/bookstore.svg?style=svg)](https://circleci.com/gh/stas7t/bookstore)
+
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
