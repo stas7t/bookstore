@@ -235,7 +235,7 @@ GEM
     pg (0.21.0)
     powerpack (0.1.2)
     public_suffix (3.1.1)
-    puma (3.12.1)
+    puma (3.12.2)
     rack (2.0.7)
     rack-pjax (1.1.0)
       nokogiri (~> 1.5)
@@ -435,7 +435,7 @@ DEPENDENCIES
   omniauth-facebook (~> 4.0)
   omniauth-rails_csrf_protection
   pg (~> 0.18)
-  puma (~> 3.7)
+  puma (~> 3.12)
   rails (~> 5.1.2)
   rails-controller-testing (~> 1.0, >= 1.0.2)
   rails-i18n (~> 5.0.0)
