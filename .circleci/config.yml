@@ -11,9 +11,9 @@ jobs:
           RAILS_ENV: test
       - image: postgres:9.6
         environment:
-          POSTGRES_USER: bookstore
+          POSTGRES_USER: postgres
           POSTGRES_DB: bookstore_test
-          POSTGRES_PASSWORD: ""
+          POSTGRES_PASSWORD: postgres
     steps:
       - checkout
 
