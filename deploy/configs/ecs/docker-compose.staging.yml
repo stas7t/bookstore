@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3'
 
 volumes:
   postgres:
@@ -7,24 +7,29 @@ volumes:
 services:
   db:
     image: postgres:10
-    expose:
-      - 5432
+    ports:
+      - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: bookstore_staging
     volumes:
       - postgres:/var/lib/postgresql/data
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: bookstore-staging
+        awslogs-region: eu-central-1
+        awslogs-stream-prefix: db
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
 
   server_app:
-    build: .
+    image: 453563644279.dkr.ecr.eu-central-1.amazonaws.com/bookstore/server_app:staging
     command: bundle exec puma -C config/puma.rb
     entrypoint: "./docker-entrypoint.sh"
     volumes:
       - assets:/home/www/bookstore/public/assets
-      - ./.sekrets.key:/home/www/bookstore/.sekrets.key
     environment:
       RAILS_ENV: staging
       DB_HOST: db
@@ -32,20 +37,25 @@ services:
       DB_NAME: bookstore_staging
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
-      SECRET_KEY_BASE: STUB
-      DEVISE_SECRET_KEY: STUB
+      SEKRETS_KEY: SEKRETS_KEY
       S3_BUCKET_NAME: 'bookstore-staging'
       S3_REGION: 'eu-central-1'
       S3_HOST_NAME: 's3.amazonaws.com'
-    depends_on:
+    ports:
+      - 3000:3000
+    links:
       - db
-    expose:
-      - 3000
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: bookstore-staging
+        awslogs-region: eu-central-1
+        awslogs-stream-prefix: server_app
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000"]
 
   web_server:
-    build: ./deploy/configs/nginx
+    image: 453563644279.dkr.ecr.eu-central-1.amazonaws.com/bookstore/web_server:staging
     volumes:
       - assets:/home/www/bookstore/public/assets
     environment:
@@ -53,7 +63,13 @@ services:
       STATIC_PATH: /home/www/bookstore/public
     ports:
       - 80:8080
-    depends_on:
+    links:
       - server_app
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: bookstore-staging
+        awslogs-region: eu-central-1
+        awslogs-stream-prefix: web_server
     healthcheck:
       test: ["CMD-SHELL", "service nginx status || exit 1"]
