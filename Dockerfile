@@ -6,7 +6,9 @@ USER root
 
 # Layer 2. Обновляем и устанавливаем нужное для Web сервера ПО
 RUN apt-get update -qq && apt-get install -y \
- build-essential libpq-dev libxml2-dev libxslt1-dev nodejs imagemagick apt-transport-https curl nano
+    build-essential libpq-dev libxml2-dev libxslt1-dev imagemagick curl nano \
+    --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/*
 
 # Layer 3. Создаем переменные окружения которые буду дальше использовать в Dockerfile
 ENV APP_USER app

@@ -6,7 +6,9 @@ USER root
 
 # Устанавливаем программное обеспечение, необходимое для корректной работы приложения:
 ENV BUILD_PACKAGES curl
-RUN apt-get update -qq && apt-get install -y $BUILD_PACKAGES
+RUN apt-get update -qq && apt-get install -y $BUILD_PACKAGES \
+    --no-install-recommends &&\
+    rm -rf /var/lib/apt/lists/*
 
 # Удалим дефолтную welcome-страницу nginx
 RUN rm /usr/share/nginx/html/*
