@@ -11,7 +11,7 @@ RUN apt-get update -qq && apt-get install -y \
 # Layer 3. Создаем переменные окружения которые буду дальше использовать в Dockerfile
 ENV APP_USER app
 ENV APP_USER_HOME /home/$APP_USER
-ENV APP_HOME /home/www/spreedemo
+ENV APP_HOME /home/www/bookstore
 
 # Layer 4. Поскольку по умолчанию Docker запускаем контейнер от имени root пользователя, то настоятельно рекомендуется создать отдельного пользователя c определенными UID и GID и запустить процесс от имени этого пользователя.
 RUN useradd -m -d $APP_USER_HOME $APP_USER
