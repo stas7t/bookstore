@@ -1,0 +1,75 @@
+version: '3'
+
+volumes:
+  postgres:
+  assets:
+
+services:
+  db:
+    image: postgres:10
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bookstore_staging
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: bookstore-staging
+        awslogs-region: eu-central-1
+        awslogs-stream-prefix: db
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+
+  server_app:
+    image: 453563644279.dkr.ecr.eu-central-1.amazonaws.com/bookstore/server_app:staging
+    command: bundle exec puma -C config/puma.rb
+    entrypoint: "./docker-entrypoint.sh"
+    volumes:
+      - assets:/home/www/bookstore/public/assets
+    environment:
+      RAILS_ENV: staging
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: bookstore_staging
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      SEKRETS_KEY: SEKRETS_KEY
+      S3_BUCKET_NAME: 'bookstore-staging'
+      S3_REGION: 'eu-central-1'
+      S3_HOST_NAME: 's3.amazonaws.com'
+    ports:
+      - 3000:3000
+    links:
+      - db
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: bookstore-staging
+        awslogs-region: eu-central-1
+        awslogs-stream-prefix: server_app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+
+  web_server:
+    image: 453563644279.dkr.ecr.eu-central-1.amazonaws.com/bookstore/web_server:staging
+    volumes:
+      - assets:/home/www/bookstore/public/assets
+    environment:
+      CUSTOM_APP_VHOST: server_app
+      STATIC_PATH: /home/www/bookstore/public
+    ports:
+      - 80:8080
+    links:
+      - server_app
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: bookstore-staging
+        awslogs-region: eu-central-1
+        awslogs-stream-prefix: web_server
+    healthcheck:
+      test: ["CMD-SHELL", "service nginx status || exit 1"]

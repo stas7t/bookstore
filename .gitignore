@@ -24,3 +24,5 @@
 
 /public/uploads
 /public/system
+
+.sekrets.key
